@@ -9,13 +9,10 @@ use Vouchedfor\SegmentIOBundle\Consumer\AbstractQueueConsumer;
  */
 class ForkCurl extends AbstractQueueConsumer
 {
-
-    protected $type = "ForkCurl";
-
-
     /**
      * Creates a new queued fork consumer which queues fork and identify
      * calls before adding them to
+     *
      * @param string $secret
      * @param array  $options
      *     boolean  "debug" - whether to use debug output, wait for response.
@@ -30,6 +27,7 @@ class ForkCurl extends AbstractQueueConsumer
     /**
      * Make an async request to our API. Fork a curl process, immediately send
      * to the API. If debug is enabled, we wait for the response.
+     *
      * @param  array $messages array of all the messages to send
      * @return boolean whether the request succeeded
      */

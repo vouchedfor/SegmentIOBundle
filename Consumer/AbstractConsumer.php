@@ -7,9 +7,6 @@ namespace Vouchedfor\SegmentIOBundle\Consumer;
  */
 abstract class AbstractConsumer
 {
-
-    protected $type = "AbstractConsumer";
-
     protected $options;
     protected $secret;
 
@@ -23,7 +20,6 @@ abstract class AbstractConsumer
         $this->secret = $secret;
         $this->options = $options;
     }
-
 
     /**
      * Tracks a user action

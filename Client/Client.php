@@ -1,6 +1,7 @@
 <?php
 namespace Vouchedfor\SegmentIOBundle\Client;
 
+use Vouchedfor\SegmentIOBundle\Consumer\AbstractConsumer;
 use Vouchedfor\SegmentIOBundle\Consumer\Socket;
 
 /**
@@ -8,26 +9,20 @@ use Vouchedfor\SegmentIOBundle\Consumer\Socket;
  */
 class Client
 {
-
-    /**
-     * VERSION
-     */
-
     const VERSION = "1.1.3";
 
     private $consumer;
 
     /**
-     * Create a new analytics object with your app's secret
-     * key
+     * Create a new analytics object with your app's secret key
      *
-     * @param string $secret
-     * @param array $options array of consumer options [optional]
-     * @param string Consumer constructor to use, socket by default.
+     * @param AbstractConsumer $consumer
+     * @param $secret
+     * @param array $options
      */
-    public function __construct($secret, $options = array())
+    public function __construct(AbstractConsumer $consumer, $secret, $options = array())
     {
-        $this->consumer = new Socket($secret, $options);
+        $this->consumer = new $consumer($secret, $options);
     }
 
     public function __destruct()
@@ -175,7 +170,7 @@ class Client
     }
 
     /**
-     * Add common fields to the gvien `message`
+     * Add common fields to the given `message`
      *
      * @param array $msg
      * @param string $def

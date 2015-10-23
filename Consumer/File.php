@@ -1,5 +1,5 @@
 <?php
-namespace Vouchedfor\SegmentIOBundle\Unused;
+namespace Vouchedfor\SegmentIOBundle\Consumer;
 
 use Vouchedfor\SegmentIOBundle\Consumer\AbstractConsumer;
 
@@ -9,9 +9,7 @@ use Vouchedfor\SegmentIOBundle\Consumer\AbstractConsumer;
  */
 class File extends AbstractConsumer
 {
-
     private $file_handle;
-    protected $type = "File";
 
     /**
      * The file consumer writes track and identify calls to a file.
@@ -48,8 +46,8 @@ class File extends AbstractConsumer
     /**
      * Tracks a user action
      *
-     * @param  array $message
-     * @return [boolean] whether the track call succeeded
+     * @param array $message
+     * @return bool
      */
     public function track(array $message)
     {
@@ -59,8 +57,8 @@ class File extends AbstractConsumer
     /**
      * Tags traits about the user.
      *
-     * @param  array $message
-     * @return [boolean] whether the identify call succeeded
+     * @param array $message
+     * @return bool
      */
     public function identify(array $message)
     {
@@ -70,8 +68,8 @@ class File extends AbstractConsumer
     /**
      * Tags traits about the group.
      *
-     * @param  array $message
-     * @return [boolean] whether the group call succeeded
+     * @param array $message
+     * @return bool
      */
     public function group(array $message)
     {
@@ -81,8 +79,8 @@ class File extends AbstractConsumer
     /**
      * Tracks a page view.
      *
-     * @param  array $message
-     * @return [boolean] whether the page call succeeded
+     * @param array $message
+     * @return bool
      */
     public function page(array $message)
     {
@@ -92,8 +90,8 @@ class File extends AbstractConsumer
     /**
      * Tracks a screen view.
      *
-     * @param  array $message
-     * @return [boolean] whether the screen call succeeded
+     * @param array $message
+     * @return bool
      */
     public function screen(array $message)
     {
@@ -113,8 +111,9 @@ class File extends AbstractConsumer
 
     /**
      * Writes the API call to a file as line-delimited json
-     * @param  [array]   $body post body content.
-     * @return [boolean] whether the request succeeded
+     *
+     * @param $body
+     * @return bool
      */
     private function write($body)
     {

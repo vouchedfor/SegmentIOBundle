@@ -1,4 +1,7 @@
 services:
+   segmentio.socket:
+         class: Vouchedfor\SegmentIOBundle\Consumer\Socket
+
     segmentio.segment:
         class: Vouchedfor\SegmentIOBundle\Segment\Segment
-        arguments: [%segmentio.access_token%]
+        arguments: [% segmentio.socket%, %segmentio.access_token%]

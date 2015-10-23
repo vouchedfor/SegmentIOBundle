@@ -2,6 +2,8 @@
 namespace Vouchedfor\SegmentIOBundle\Segment;
 
 use Vouchedfor\SegmentIOBundle\Client\Client;
+use Vouchedfor\SegmentIOBundle\Consumer\AbstractConsumer;
+use Vouchedfor\SegmentIOBundle\Consumer\Socket;
 
 /**
  * Class Segment
@@ -15,20 +17,14 @@ class Segment
 
     /**
      * Initializes the default client to use. Uses the socket consumer by default.
-     * @param  string $secret your project's secret key
+     *
+     * @param AbstractConsumer $consumer
+     * @param $secret
      */
-    public function __construct($secret)
+    public function __construct(AbstractConsumer $consumer, $secret)
     {
         $this->secret = $secret;
-        $this->client = new Client($secret);
-    }
-
-    /**
-     * @return \Vouchedfor\SegmentIOBundle\Client\Client
-     */
-    public function getClient()
-    {
-        return $this->client;
+        $this->client = new Client($consumer, $secret);
     }
 
     /**
@@ -81,49 +77,56 @@ class Segment
      *
      * @param int   $groupId
      * @param int   $userId
-     * @param array $message
+     * @param array $traits
      * @return bool Whether the group call succeeded
      */
-    public function group($groupId, $userId, array $message)
+    public function group($groupId, $userId, array $traits)
     {
         if (!$this->isValid()) {
             return false;
         }
 
-        $message['groupId'] = $groupId;
-        $message['userId'] = $userId;
-
-        return $this->getClient()->group($message);
+        return $this->getClient()->group(array('groupId' => $groupId,
+                                               'userId' => $userId,
+                                               'traits' => $traits));
     }
 
     /**
      * Tracks a page view
      *
+     * @param int    $userId
+     * @param string $name
      * @param  array $properties
      * @return boolean whether the page call succeeded
      */
-    public function page(array $properties)
+    public function page($userId, $name, array $properties)
     {
         if (!$this->isValid()) {
             return false;
         }
 
-        return $this->getClient()->page(array('properties' => $properties));
+        return $this->getClient()->page(array('userId' => $userId,
+                                              'name' => $name,
+                                              'properties' => $properties));
     }
 
     /**
      * Tracks a screen view
      *
-     * @param  array $properties
+     * @param int    $userId
+     * @param string $name
+     * @param array  $properties
      * @return boolean whether the screen call succeeded
      */
-    public function screen(array $properties)
+    public function screen($userId, $name, array $properties)
     {
         if (!$this->isValid()) {
             return false;
         }
 
-        return $this->getClient()->screen(array('properties' => $properties));
+        return $this->getClient()->screen(array('userId' => $userId,
+                                                'name' => $name,
+                                                'properties' => $properties));
     }
 
     /**
@@ -131,17 +134,15 @@ class Segment
      *
      * @param int   $userId
      * @param int   $previousId
-     * @param array $message
      * @return bool
      */
-    public function alias($userId, $previousId, array $message)
+    public function alias($userId, $previousId)
     {
         if (!$this->isValid()) {
             return false;
         }
 
-        return $this->getClient()->alias(
-            array('userId' => $userId, 'previousId' => $previousId)
+        return $this->getClient()->alias(array('userId' => $userId, 'previousId' => $previousId)
         );
     }
 
@@ -165,5 +166,14 @@ class Segment
     private function isValid()
     {
         return !empty($this->secret);
+    }
+
+
+    /**
+     * @return \Vouchedfor\SegmentIOBundle\Client\Client
+     */
+    private function getClient()
+    {
+        return $this->client;
     }
 }

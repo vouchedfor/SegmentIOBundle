@@ -7,9 +7,6 @@ namespace Vouchedfor\SegmentIOBundle\Consumer;
  */
 abstract class AbstractQueueConsumer extends AbstractConsumer
 {
-
-    protected $type = "AbstractQueueConsumer";
-
     protected $queue;
     protected $max_queue_size = 1000;
     protected $batch_size = 100;
@@ -151,12 +148,11 @@ abstract class AbstractQueueConsumer extends AbstractConsumer
     }
 
     /**
-     * Given a batch of messages the method returns
-     * a valid payload.
+     * Given a batch of messages the method returns a valid payload.
      *
-     * @param {Array} batch
-     * @return {Array}
-     **/
+     * @param $batch
+     * @return array
+     */
     protected function payload($batch)
     {
         return array(

@@ -7,8 +7,6 @@ namespace Vouchedfor\SegmentIOBundle\Consumer;
  */
 class Socket extends AbstractQueueConsumer
 {
-
-    protected $type = "Socket";
     private $socket_failed;
 
     /**
