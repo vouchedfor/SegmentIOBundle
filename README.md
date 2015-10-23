@@ -10,7 +10,7 @@ Open a command console, enter your project directory and execute the
 following command to download the latest stable version of this bundle:
 
 ```bash
-$ composer require <package-name> "~1"
+$ composer require vouchedfor/SegmentIOBundle
 ```
 
 This command requires you to have Composer installed globally, as explained
@@ -35,7 +35,7 @@ class AppKernel extends Kernel
         $bundles = array(
             // ...
 
-            new <vendor>\<bundle-name>\<bundle-long-name>(),
+            new Vouchedfor\SegmentIOBundle\SegmentIOBundle(),
         );
 
         // ...
