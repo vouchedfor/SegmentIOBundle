@@ -1,0 +1,16 @@
+{
+    "name": "vouchedfor/SegmentIOBundle",
+    "description": "Segment.io integration for Symfony 2",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jonathan Stidwill"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "vouchedfor\\SegmentIOBundle": "src/"
+        }
+    }
+}
