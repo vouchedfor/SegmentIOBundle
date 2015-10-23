@@ -1,7 +1,7 @@
 <?php
 namespace Vouchedfor\SegmentIOBundle\Segment;
 
-use Vouchedfor\SegmentIOBundle\Client;
+use Vouchedfor\SegmentIOBundle\Client\Client;
 
 /**
  * Class Segment
