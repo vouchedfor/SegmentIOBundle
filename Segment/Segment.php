@@ -24,6 +24,14 @@ class Segment
     }
 
     /**
+     * @return \Vouchedfor\SegmentIOBundle\Client\Client
+     */
+    public function getClient()
+    {
+        return $this->client;
+    }
+
+    /**
      * Tracks a user action
      *
      * @param int    $userId
@@ -38,7 +46,7 @@ class Segment
             return false;
         }
 
-        return $this->client->track(
+        return $this->getClient()->track(
             array(
                 'userId' => $userId,
                 'event' => $event,
@@ -60,7 +68,7 @@ class Segment
             return false;
         }
 
-        return $this->client->identify(
+        return $this->getClient()->identify(
             array(
                 'userId' => $userId,
                 'traits' => $traits,
@@ -85,7 +93,7 @@ class Segment
         $message['groupId'] = $groupId;
         $message['userId'] = $userId;
 
-        return $this->client->group($message);
+        return $this->getClient()->group($message);
     }
 
     /**
@@ -100,7 +108,7 @@ class Segment
             return false;
         }
 
-        return $this->client->page(array('properties' => $properties));
+        return $this->getClient()->page(array('properties' => $properties));
     }
 
     /**
@@ -115,7 +123,7 @@ class Segment
             return false;
         }
 
-        return $this->client->screen(array('properties' => $properties));
+        return $this->getClient()->screen(array('properties' => $properties));
     }
 
     /**
@@ -132,7 +140,7 @@ class Segment
             return false;
         }
 
-        return $this->client->alias(
+        return $this->getClient()->alias(
             array('userId' => $userId, 'previousId' => $previousId)
         );
     }
@@ -148,7 +156,7 @@ class Segment
             return false;
         }
 
-        return $this->client->flush();
+        return $this->getClient()->flush();
     }
 
     /**
