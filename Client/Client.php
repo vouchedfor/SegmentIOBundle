@@ -1,7 +1,7 @@
 <?php
-namespace SegmentIO\SegmentIOBundle\Client;
+namespace Vouchedfor\SegmentIOBundle\Client;
 
-use SegmentIO\SegmentIOBundle\Consumer\Socket;
+use Vouchedfor\SegmentIOBundle\Consumer\Socket;
 
 /**
  * Class Client

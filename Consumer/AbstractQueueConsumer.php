@@ -1,9 +1,9 @@
 <?php
-namespace SegmentIO\SegmentIOBundle\Consumer;
+namespace Vouchedfor\SegmentIOBundle\Consumer;
 
 /**
  * Class AbstractQueueConsumer
- * @package SegmentIO\SegmentIOBundle\Consumer
+ * @package Vouchedfor\SegmentIOBundle\Consumer
  */
 abstract class AbstractQueueConsumer extends AbstractConsumer
 {

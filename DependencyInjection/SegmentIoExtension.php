@@ -1,6 +1,6 @@
 <?php
 
-namespace SegmentIO\SegmentIOBundle\DependencyInjection;
+namespace Vouchedfor\SegmentIOBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;

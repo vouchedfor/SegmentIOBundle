@@ -1,11 +1,11 @@
 <?php
-namespace SegmentIO\SegmentIOBundle\Segment;
+namespace Vouchedfor\SegmentIOBundle\Segment;
 
-use SegmentIO\SegmentIOBundle\Client\Client;
+use Vouchedfor\SegmentIOBundle\Client;
 
 /**
  * Class Segment
- * @package SegmentIO\SegmentIOBundle\Segment
+ * @package Vouchedfor\SegmentIOBundle\Segment
  */
 class Segment
 {

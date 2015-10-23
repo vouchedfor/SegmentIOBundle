@@ -1,9 +1,9 @@
 <?php
-namespace SegmentIO\SegmentIOBundle\Consumer;
+namespace Vouchedfor\SegmentIOBundle\Consumer;
 
 /**
  * Class Socket
- * @package SegmentIO\SegmentIOBundle\Consumer
+ * @package Vouchedfor\SegmentIOBundle\Consumer
  */
 class Socket extends AbstractQueueConsumer
 {

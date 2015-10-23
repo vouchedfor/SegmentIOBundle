@@ -9,8 +9,6 @@
         }
     ],
     "autoload": {
-        "psr-0": {
-            "vouchedfor\\SegmentIOBundle": "src/"
-        }
+        "psr-4": { "Vouchedfor\\SegmentIOBundle\\": "" }
     }
 }

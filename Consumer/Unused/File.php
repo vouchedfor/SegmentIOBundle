@@ -1,11 +1,11 @@
 <?php
-namespace SegmentIO\SegmentIOBundle\Unused;
+namespace Vouchedfor\SegmentIOBundle\Unused;
 
-use SegmentIO\SegmentIOBundle\Consumer\AbstractConsumer;
+use Vouchedfor\SegmentIOBundle\Consumer\AbstractConsumer;
 
 /**
  * Class File
- * @package SegmentIO\SegmentIOBundle\Unused
+ * @package Vouchedfor\SegmentIOBundle\Unused
  */
 class File extends AbstractConsumer
 {

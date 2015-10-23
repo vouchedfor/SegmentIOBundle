@@ -1,11 +1,11 @@
 <?php
-namespace SegmentIO\SegmentIOBundle\Unused;
+namespace Vouchedfor\SegmentIOBundle\Unused;
 
-use SegmentIO\SegmentIOBundle\Consumer\AbstractQueueConsumer;
+use Vouchedfor\SegmentIOBundle\Consumer\AbstractQueueConsumer;
 
 /**
  * Class ForkCurl
- * @package SegmentIO\SegmentIOBundle\Unused
+ * @package Vouchedfor\SegmentIOBundle\Unused
  */
 class ForkCurl extends AbstractQueueConsumer
 {

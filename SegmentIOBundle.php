@@ -1,6 +1,6 @@
 <?php
 
-namespace SegmentIO\SegmentIOBundle;
+namespace Vouchedfor\SegmentIOBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

@@ -1,4 +1,4 @@
 services:
     segmentio.segment:
-        class: SegmentIO\SegmentIOBundle\Segment\Segment
+        class: Vouchedfor\SegmentIOBundle\Segment\Segment
         arguments: [%segmentio.access_token%]
