@@ -22,11 +22,12 @@ class ConsumerFactory
             case 'socket':
                 $instance = new Socket($access_token);
                 break;
-
             case 'file':
                 $instance = new File($access_token);
                 break;
-
+            case 'batch':
+                $instance = new ForkCurl($access_token);
+                break;
             default:
                 throw new \Exception('Invalid consumer type');
         }
