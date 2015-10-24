@@ -33,8 +33,8 @@ class SocketTest extends \PHPUnit_Framework_TestCase
         $response = $this->segment->track(
             2,
             'Test Event',
-            array("property1" => "Value 1",
-                  "property2" => "Value 2",
+            array('property1' => 'Value 1',
+                  'property2' => 'Value 2',
             )
         );
 
@@ -53,9 +53,9 @@ class SocketTest extends \PHPUnit_Framework_TestCase
         $response = $this->segment->identify(
             2,
             array(
-                "traits" => array(
-                    "name" => "John Lennon",
-                    "email" => "john.lennon@test.com",
+                'traits' => array(
+                    'name' => 'John Lennon',
+                    'email' => 'john.lennon@test.com',
                 ),
             )
         );
@@ -76,8 +76,8 @@ class SocketTest extends \PHPUnit_Framework_TestCase
             3,
             2,
             array(
-                    "company" => "Acme Corp",
-                    "location" => "San Francisco",
+                    'company' => 'Acme Corp',
+                    'location' => 'San Francisco',
             )
         );
 
@@ -97,8 +97,8 @@ class SocketTest extends \PHPUnit_Framework_TestCase
             3,
             'Login page',
             array(
-                "url" => "http://example.com",
-                "referrer" => "http://google.com",
+                'url' => 'http://example.com',
+                'referrer' => 'http://google.com',
             )
         );
 
@@ -118,8 +118,8 @@ class SocketTest extends \PHPUnit_Framework_TestCase
             3,
             'Signup',
             array(
-                "url" => "http://example.com",
-                "referrer" => "http://google.com",
+                'url' => 'http://example.com',
+                'referrer' => 'http://google.com',
             )
         );
 

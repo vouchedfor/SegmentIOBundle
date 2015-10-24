@@ -9,7 +9,7 @@ use Vouchedfor\SegmentIOBundle\Consumer\Socket;
  */
 class Client
 {
-    const VERSION = "1.1.3";
+    const VERSION = '1.1.3';
 
     private $consumer;
 
@@ -37,8 +37,8 @@ class Client
      */
     public function track(array $message)
     {
-        $message = $this->message($message, "properties");
-        $message["type"] = "track";
+        $message = $this->message($message);
+        $message['type'] = 'track';
 
         return $this->consumer->track($message);
     }
@@ -51,8 +51,8 @@ class Client
      */
     public function identify(array $message)
     {
-        $message = $this->message($message, "traits");
-        $message["type"] = "identify";
+        $message = $this->message($message);
+        $message['type'] = 'identify';
 
         return $this->consumer->identify($message);
     }
@@ -65,8 +65,8 @@ class Client
      */
     public function group(array $message)
     {
-        $message = $this->message($message, "traits");
-        $message["type"] = "group";
+        $message = $this->message($message);
+        $message['type'] = 'group';
 
         return $this->consumer->group($message);
     }
@@ -79,8 +79,8 @@ class Client
      */
     public function page(array $message)
     {
-        $message = $this->message($message, "properties");
-        $message["type"] = "page";
+        $message = $this->message($message);
+        $message['type'] = 'page';
 
         return $this->consumer->page($message);
     }
@@ -93,8 +93,8 @@ class Client
      */
     public function screen(array $message)
     {
-        $message = $this->message($message, "properties");
-        $message["type"] = "screen";
+        $message = $this->message($message);
+        $message['type'] = 'screen';
 
         return $this->consumer->screen($message);
     }
@@ -108,7 +108,7 @@ class Client
     public function alias(array $message)
     {
         $message = $this->message($message);
-        $message["type"] = "alias";
+        $message['type'] = 'alias';
 
         return $this->consumer->alias($message);
     }
@@ -131,7 +131,7 @@ class Client
      * The timestamp can be time in seconds `time()` or `microseconds(true)`.
      * any other input is considered an error and the method will return a new date.
      *
-     * Note: php's date() "u" format (for microseconds) has a bug in it
+     * Note: php's date() 'u' format (for microseconds) has a bug in it
      * it always shows `.000` for microseconds since `date()` only accepts
      * ints, so we have to construct the date ourselves if microtime is passed.
      *
@@ -146,24 +146,24 @@ class Client
             $ts = time();
         }
         if (is_integer($ts)) {
-            return date("c", $ts);
+            return date('c', $ts);
         }
 
         // anything else return a new date.
         if (!is_float($ts)) {
-            return date("c");
+            return date('c');
         }
 
         // fix for floatval casting in send.php
-        $parts = explode(".", (string)$ts);
+        $parts = explode('.', (string)$ts);
         if (!isset($parts[1])) {
-            return date("c", (int)$parts[0]);
+            return date('c', (int)$parts[0]);
         }
 
         // microtime(true)
         $sec = (int)$parts[0];
         $usec = (int)$parts[1];
-        $fmt = sprintf("Y-m-d\TH:i:s%sP", $usec);
+        $fmt = sprintf('Y-m-d\TH:i:s%sP', $usec);
 
         return date($fmt, (int)$sec);
     }
@@ -172,27 +172,20 @@ class Client
      * Add common fields to the given `message`
      *
      * @param array $msg
-     * @param string $def
      * @return array
      */
 
-    private function message($msg, $def = "")
+    private function message($msg)
     {
-        if ($def && !isset($msg[$def])) {
-            $msg[$def] = array();
+        if (!isset($msg['context'])) {
+            $msg['context'] = array();
         }
-        if ($def && empty($msg[$def])) {
-            $msg[$def] = (object)$msg[$def];
+        if (!isset($msg['timestamp'])) {
+            $msg['timestamp'] = null;
         }
-        if (!isset($msg["context"])) {
-            $msg["context"] = array();
-        }
-        if (!isset($msg["timestamp"])) {
-            $msg["timestamp"] = null;
-        }
-        $msg["context"] = array_merge($msg["context"], $this->getContext());
-        $msg["timestamp"] = $this->formatTime($msg["timestamp"]);
-        $msg["messageId"] = self::messageId();
+        $msg['context'] = array_merge($msg['context'], $this->getContext());
+        $msg['timestamp'] = $this->formatTime($msg['timestamp']);
+        $msg['messageId'] = self::messageId();
 
         return $msg;
     }
@@ -208,7 +201,7 @@ class Client
     private static function messageId()
     {
         return sprintf(
-            "%04x%04x-%04x-%04x-%04x-%04x%04x%04x",
+            '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
             mt_rand(0, 0xffff),
             mt_rand(0, 0xffff),
             mt_rand(0, 0xffff),
@@ -227,9 +220,9 @@ class Client
     private function getContext()
     {
         return array(
-            "library" => array(
-                "name" => "analytics-php",
-                "version" => self::VERSION,
+            'library' => array(
+                'name' => 'analytics-php',
+                'version' => self::VERSION,
             ),
         );
     }

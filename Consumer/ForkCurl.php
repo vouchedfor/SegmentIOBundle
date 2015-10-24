@@ -1,11 +1,9 @@
 <?php
-namespace Vouchedfor\SegmentIOBundle\Unused;
-
-use Vouchedfor\SegmentIOBundle\Consumer\AbstractQueueConsumer;
+namespace Vouchedfor\SegmentIOBundle\Consumer;
 
 /**
  * Class ForkCurl
- * @package Vouchedfor\SegmentIOBundle\Unused
+ * @package Vouchedfor\SegmentIOBundle\Consumer
  */
 class ForkCurl extends AbstractQueueConsumer
 {
@@ -15,9 +13,9 @@ class ForkCurl extends AbstractQueueConsumer
      *
      * @param string $secret
      * @param array  $options
-     *     boolean  "debug" - whether to use debug output, wait for response.
-     *     number   "max_queue_size" - the max size of messages to enqueue
-     *     number   "batch_size" - how many messages to send in a single request
+     *     boolean  'debug' - whether to use debug output, wait for response.
+     *     number   'max_queue_size' - the max size of messages to enqueue
+     *     number   'batch_size' - how many messages to send in a single request
      */
     public function __construct($secret, $options = array())
     {
@@ -33,7 +31,6 @@ class ForkCurl extends AbstractQueueConsumer
      */
     public function flushBatch($messages)
     {
-
         $body = $this->payload($messages);
         $payload = json_encode($body);
 
@@ -41,16 +38,16 @@ class ForkCurl extends AbstractQueueConsumer
         $payload = escapeshellarg($payload);
         $secret = $this->secret;
 
-        $protocol = $this->ssl() ? "https://" : "http://";
-        $host = "api.segment.io";
-        $path = "/v1/import";
+        $protocol = $this->ssl() ? 'https://' : 'http://';
+        $host = 'api.segment.io';
+        $path = '/v1/import';
         $url = $protocol.$host.$path;
 
-        $cmd = "curl -u $secret: -X POST -H 'Content-Type: application/json'";
-        $cmd .= " -d ".$payload." '".$url."'";
+        $cmd = 'curl -u $secret: -X POST -H "Content-Type: application/json"';
+        $cmd .= ' -d '.$payload.' "'.$url.'"';
 
         if (!$this->debug()) {
-            $cmd .= " > /dev/null 2>&1 &";
+            $cmd .= ' > /dev/null 2>&1 &';
         }
 
         exec($cmd, $output, $exit);

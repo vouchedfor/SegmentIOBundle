@@ -1,27 +1,19 @@
 <?php
 namespace Vouchedfor\SegmentIOBundle\Segment;
 
-use Vouchedfor\SegmentIOBundle\Consumer\File;
+use Vouchedfor\SegmentIOBundle\Consumer\ForkCurl;
 
 /**
  * Class FileTest
  * @package Vouchedfor\SegmentIOBundle\Consumer
  */
-class FileTest extends \PHPUnit_Framework_TestCase
+class ForkCurlTest extends \PHPUnit_Framework_TestCase
 {
     private $segment;
 
     public function setup()
     {
-        $this->segment = new Segment(new File('',  array('filename' => $this->getFilename())));
-    }
-
-    public function tearDown()
-    {
-        $str = file_get_contents($this->getFilename());
-        var_dump($str);
-
-        unlink($this->getFilename());
+        $this->segment = new Segment(new ForkCurl('random_key'));
     }
 
     /**
@@ -38,8 +30,6 @@ class FileTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertTrue($response);
-
-        $this->checkWritten('track');
     }
 
     /**
@@ -49,15 +39,13 @@ class FileTest extends \PHPUnit_Framework_TestCase
     {
         $response = $this->segment->identify(
             'Calvin',
-             array('loves_php' => false,
-                   'type' => 'analytics.log',
-                   'birthday' => time()
+            array('loves_php' => false,
+                'type' => 'analytics.log',
+                'birthday' => time()
             )
         );
 
         $this->assertTrue($response);
-
-        $this->checkWritten('identify');
     }
 
     /**
@@ -67,14 +55,12 @@ class FileTest extends \PHPUnit_Framework_TestCase
     {
         $response = $this->segment->group(
             'user-id',
-              'group-id',
-              array('type' => 'consumer analytics.log test',
+            'group-id',
+            array('type' => 'consumer analytics.log test',
             )
         );
 
         $this->assertTrue($response);
-
-        $this->checkWritten('group');
     }
 
     /**
@@ -92,8 +78,6 @@ class FileTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertTrue($response);
-
-        $this->checkWritten('page');
     }
 
     /**
@@ -111,8 +95,6 @@ class FileTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertTrue($response);
-
-        $this->checkWritten('screen');
     }
 
     /**
@@ -126,27 +108,6 @@ class FileTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertTrue($response);
-
-        $this->checkWritten('alias');
-    }
-
-    /**
-     * @param $type
-     */
-    private function checkWritten($type) {
-        exec('wc -l ' . $this->getFilename(), $output);
-        $out = trim($output[0]);
-        $this->assertEquals($out, '1 ' . $this->getFilename());
-        $str = file_get_contents($this->getFilename());
-        $json = json_decode(trim($str));
-        $this->assertEquals($type, $json->type);
-    }
-
-    /**
-     * @return string
-     */
-    private function getFilename(){
-        return sys_get_temp_dir().DIRECTORY_SEPARATOR.'file_test_analytics.log';
     }
 }
 

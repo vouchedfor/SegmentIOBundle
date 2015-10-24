@@ -20,12 +20,12 @@ abstract class AbstractQueueConsumer extends AbstractConsumer
     {
         parent::__construct($secret, $options);
 
-        if (isset($options["max_queue_size"])) {
-            $this->max_queue_size = $options["max_queue_size"];
+        if (isset($options['max_queue_size'])) {
+            $this->max_queue_size = $options['max_queue_size'];
         }
 
-        if (isset($options["batch_size"])) {
-            $this->batch_size = $options["batch_size"];
+        if (isset($options['batch_size'])) {
+            $this->batch_size = $options['batch_size'];
         }
 
         $this->queue = array();
@@ -156,8 +156,8 @@ abstract class AbstractQueueConsumer extends AbstractConsumer
     protected function payload($batch)
     {
         return array(
-            "batch" => $batch,
-            "sentAt" => date("c"),
+            'batch' => $batch,
+            'sentAt' => date('c'),
         );
     }
 

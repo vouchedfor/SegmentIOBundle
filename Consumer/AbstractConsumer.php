@@ -75,7 +75,7 @@ abstract class AbstractConsumer
      */
     protected function debug()
     {
-        return isset($this->options["debug"]) ? $this->options["debug"] : false;
+        return isset($this->options['debug']) ? $this->options['debug'] : false;
     }
 
     /**
@@ -86,7 +86,7 @@ abstract class AbstractConsumer
      */
     protected function ssl()
     {
-        return isset($this->options["ssl"]) ? $this->options["ssl"] : true;
+        return isset($this->options['ssl']) ? $this->options['ssl'] : true;
     }
 
 
@@ -105,7 +105,7 @@ abstract class AbstractConsumer
         }
 
         if ($this->debug()) {
-            error_log("[Analytics][".$this->type."] ".$msg);
+            error_log('[Analytics]['.$this->type.'] '.$msg);
         }
     }
 }

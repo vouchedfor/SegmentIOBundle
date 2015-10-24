@@ -13,19 +13,19 @@ class Socket extends AbstractQueueConsumer
      * Creates a new socket consumer for dispatching async requests immediately
      * @param string $secret
      * @param array $options
-     *     number   "timeout" - the timeout for connecting
-     *     function "error_handler" - function called back on errors.
-     *     boolean  "debug" - whether to use debug output, wait for response.
+     *     number   'timeout' - the timeout for connecting
+     *     function 'error_handler' - function called back on errors.
+     *     boolean  'debug' - whether to use debug output, wait for response.
      */
     public function __construct($secret, $options = array())
     {
 
-        if (!isset($options["timeout"])) {
-            $options["timeout"] = 5;
+        if (!isset($options['timeout'])) {
+            $options['timeout'] = 5;
         }
 
-        if (!isset($options["host"])) {
-            $options["host"] = "api.segment.io";
+        if (!isset($options['host'])) {
+            $options['host'] = 'api.segment.io';
         }
 
         parent::__construct($secret, $options);
@@ -43,7 +43,7 @@ class Socket extends AbstractQueueConsumer
         $payload = $this->payload($batch);
         $payload = json_encode($payload);
 
-        $body = $this->createBody($this->options["host"], $payload);
+        $body = $this->createBody($this->options['host'], $payload);
 
         return $this->makeRequest($socket, $body);
     }
@@ -56,16 +56,16 @@ class Socket extends AbstractQueueConsumer
             return false;
         }
 
-        $protocol = $this->ssl() ? "ssl" : "tcp";
-        $host = $this->options["host"];
+        $protocol = $this->ssl() ? 'ssl' : 'tcp';
+        $host = $this->options['host'];
         $port = $this->ssl() ? 443 : 80;
-        $timeout = $this->options["timeout"];
+        $timeout = $this->options['timeout'];
 
         try {
             # Open our socket to the API Server.
             # Since we're try catch'ing prevent PHP logs.
             $socket = @pfsockopen(
-                $protocol."://".$host,
+                $protocol.'://'.$host,
                 $port,
                 $errno,
                 $errstr,
@@ -140,8 +140,8 @@ class Socket extends AbstractQueueConsumer
         if ($this->debug()) {
             $res = $this->parseResponse(fread($socket, 2048));
 
-            if ($res["status"] != "200") {
-                $this->handleError($res["status"], $res["message"]);
+            if ($res['status'] != '200') {
+                $this->handleError($res['status'], $res['message']);
                 $success = false;
             }
         }
@@ -159,14 +159,14 @@ class Socket extends AbstractQueueConsumer
     private function createBody($host, $content)
     {
 
-        $req = "";
-        $req .= "POST /v1/import HTTP/1.1\r\n";
-        $req .= "Host: ".$host."\r\n";
-        $req .= "Content-Type: application/json\r\n";
-        $req .= "Authorization: Basic ".base64_encode($this->secret.":")."\r\n";
-        $req .= "Accept: application/json\r\n";
-        $req .= "Content-length: ".strlen($content)."\r\n";
-        $req .= "\r\n";
+        $req = '';
+        $req .= 'POST /v1/import HTTP/1.1\r\n';
+        $req .= 'Host: '.$host.'\r\n';
+        $req .= 'Content-Type: application/json\r\n';
+        $req .= 'Authorization: Basic '.base64_encode($this->secret.':').'\r\n';
+        $req .= 'Accept: application/json\r\n';
+        $req .= 'Content-length: '.strlen($content).'\r\n';
+        $req .= '\r\n';
         $req .= $content;
 
         return $req;
@@ -177,22 +177,22 @@ class Socket extends AbstractQueueConsumer
      * Parse our response from the server, check header and body.
      * @param  string $res
      * @return array
-     *     string $status  HTTP code, e.g. "200"
+     *     string $status  HTTP code, e.g. '200'
      *     string $message JSON response from the api
      */
     private function parseResponse($res)
     {
 
-        $contents = explode("\n", $res);
+        $contents = explode('\n', $res);
 
         # Response comes back as HTTP/1.1 200 OK
         # Final line contains HTTP response.
-        $status = explode(" ", $contents[0], 3);
+        $status = explode(' ', $contents[0], 3);
         $result = $contents[count($contents) - 1];
 
         return array(
-            "status" => isset($status[1]) ? $status[1] : null,
-            "message" => $result,
+            'status' => isset($status[1]) ? $status[1] : null,
+            'message' => $result,
         );
     }
 }

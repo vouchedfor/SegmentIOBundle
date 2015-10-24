@@ -1,8 +1,6 @@
 <?php
 namespace Vouchedfor\SegmentIOBundle\Consumer;
 
-use Vouchedfor\SegmentIOBundle\Consumer\AbstractConsumer;
-
 /**
  * Class File
  * @package Vouchedfor\SegmentIOBundle\Unused
@@ -15,20 +13,20 @@ class File extends AbstractConsumer
      * The file consumer writes track and identify calls to a file.
      * @param string $secret
      * @param array  $options
-     *     string "filename" - where to log the analytics calls
+     *     string 'filename" - where to log the analytics calls
      */
     public function __construct($secret, $options = array())
     {
 
-        if (!isset($options["filename"])) {
-            $options["filename"] = sys_get_temp_dir().DIRECTORY_SEPARATOR."analytics.log";
+        if (!isset($options['filename'])) {
+            $options['filename'] = sys_get_temp_dir().DIRECTORY_SEPARATOR.'analytics.log';
         }
 
         parent::__construct($secret, $options);
 
         try {
-            $this->file_handle = fopen($options["filename"], "a");
-            chmod($options["filename"], 0777);
+            $this->file_handle = fopen($options['filename'], 'a');
+            chmod($options['filename'], 0777);
         } catch (Exception $e) {
             $this->handleError($e->getCode(), $e->getMessage());
         }
@@ -37,7 +35,7 @@ class File extends AbstractConsumer
     public function __destruct()
     {
         if ($this->file_handle &&
-            get_resource_type($this->file_handle) != "Unknown"
+            get_resource_type($this->file_handle) != 'Unknown'
         ) {
             fclose($this->file_handle);
         }
@@ -123,7 +121,7 @@ class File extends AbstractConsumer
         }
 
         $content = json_encode($body);
-        $content .= "\n";
+        $content .= PHP_EOL;
 
         return fwrite($this->file_handle, $content) == strlen($content);
     }
