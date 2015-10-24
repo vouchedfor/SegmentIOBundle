@@ -137,7 +137,6 @@ class Socket extends AbstractQueueConsumer
         $success = true;
 
         if ($this->debug()) {
-            stream_set_timeout($socket, $this->options['timeout']);
             $res = $this->parseResponse(fread($socket, 2048));
 
             if ($res['status'] != '200') {

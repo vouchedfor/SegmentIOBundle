@@ -155,7 +155,7 @@ class SegmentTest extends \PHPUnit_Framework_TestCase
         );
         $this->assertEquals(2, $socket->getQueueSize());
 
-        $response = $segment->screen(
+        $segment->screen(
             'user-id',
             'grand theft auto',
             array(
@@ -211,10 +211,10 @@ class SegmentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test debug mode and timeout
+     * Test timeout
      */
     public function testDebugMode() {
-        $segment = new Segment(new Socket('random_key', array('debug' => true, 'timeout' => 1)));
+        $segment = new Segment(new Socket('random_key', array('timeout' => 1)));
 
         $response = $segment->track(
             'some-user',
