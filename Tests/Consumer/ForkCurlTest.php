@@ -109,5 +109,22 @@ class ForkCurlTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($response);
     }
+
+    /**
+     * Test flush batch
+     */
+    public function testFlushBatch()
+    {
+        $response = $this->segment->alias(
+            'previous-id',
+            'user-id'
+        );
+
+        $this->assertTrue($response);
+
+        $response = $this->segment->flush();
+
+        $this->assertNull($response);
+    }
 }
 
