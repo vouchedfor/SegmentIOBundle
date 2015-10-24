@@ -2,20 +2,20 @@
 
 namespace Vouchedfor\SegmentIOBundle\Segment;
 
-use Vouchedfor\SegmentIOBundle\Consumer\File;
+use Vouchedfor\SegmentIOBundle\Consumer\Socket;
 
 /**
- * Class FileTest
+ * Class SocketTest
  * @package Vouchedfor\SegmentIOBundle\Consumer
  */
-class FileTest extends \PHPUnit_Framework_TestCase
+class SocketTest extends \PHPUnit_Framework_TestCase
 {
     private $consumer;
     private $segment;
 
     public function setup()
     {
-        $this->consumer = $this->getMockBuilder(File::class)
+        $this->consumer = $this->getMockBuilder(Socket::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -35,7 +35,7 @@ class FileTest extends \PHPUnit_Framework_TestCase
             2,
             'Test Event',
             array("property1" => "Value 1",
-                "property2" => "Value 2",
+                  "property2" => "Value 2",
             )
         );
 
@@ -77,8 +77,8 @@ class FileTest extends \PHPUnit_Framework_TestCase
             3,
             2,
             array(
-                "company" => "Acme Corp",
-                "location" => "San Francisco",
+                    "company" => "Acme Corp",
+                    "location" => "San Francisco",
             )
         );
 

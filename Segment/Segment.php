@@ -13,18 +13,15 @@ class Segment
 {
 
     private $client;
-    private $secret;
 
     /**
      * Initializes the default client to use. Uses the socket consumer by default.
      *
      * @param AbstractConsumer $consumer
-     * @param $secret
      */
-    public function __construct(AbstractConsumer $consumer, $secret)
+    public function __construct(AbstractConsumer $consumer)
     {
-        $this->secret = $secret;
-        $this->client = new Client($consumer, $secret);
+        $this->client = new Client($consumer);
     }
 
     /**
@@ -38,10 +35,6 @@ class Segment
      */
     public function track($userId, $event, array $properties)
     {
-        if (!$this->isValid()) {
-            return false;
-        }
-
         return $this->getClient()->track(
             array(
                 'userId' => $userId,
@@ -60,10 +53,6 @@ class Segment
      */
     public function identify($userId, array $traits)
     {
-        if (!$this->isValid()) {
-            return false;
-        }
-
         return $this->getClient()->identify(
             array(
                 'userId' => $userId,
@@ -82,10 +71,6 @@ class Segment
      */
     public function group($groupId, $userId, array $traits)
     {
-        if (!$this->isValid()) {
-            return false;
-        }
-
         return $this->getClient()->group(array('groupId' => $groupId,
                                                'userId' => $userId,
                                                'traits' => $traits));
@@ -101,10 +86,6 @@ class Segment
      */
     public function page($userId, $name, array $properties)
     {
-        if (!$this->isValid()) {
-            return false;
-        }
-
         return $this->getClient()->page(array('userId' => $userId,
                                               'name' => $name,
                                               'properties' => $properties));
@@ -120,10 +101,6 @@ class Segment
      */
     public function screen($userId, $name, array $properties)
     {
-        if (!$this->isValid()) {
-            return false;
-        }
-
         return $this->getClient()->screen(array('userId' => $userId,
                                                 'name' => $name,
                                                 'properties' => $properties));
@@ -138,12 +115,7 @@ class Segment
      */
     public function alias($userId, $previousId)
     {
-        if (!$this->isValid()) {
-            return false;
-        }
-
-        return $this->getClient()->alias(array('userId' => $userId, 'previousId' => $previousId)
-        );
+        return $this->getClient()->alias(array('userId' => $userId, 'previousId' => $previousId));
     }
 
     /**
@@ -153,21 +125,8 @@ class Segment
      */
     public function flush()
     {
-        if (!$this->isValid()) {
-            return false;
-        }
-
         return $this->getClient()->flush();
     }
-
-    /**
-     * @return bool
-     */
-    private function isValid()
-    {
-        return !empty($this->secret);
-    }
-
 
     /**
      * @return \Vouchedfor\SegmentIOBundle\Client\Client

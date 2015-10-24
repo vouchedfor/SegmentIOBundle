@@ -17,12 +17,11 @@ class Client
      * Create a new analytics object with your app's secret key
      *
      * @param AbstractConsumer $consumer
-     * @param $secret
      * @param array $options
      */
-    public function __construct(AbstractConsumer $consumer, $secret, $options = array())
+    public function __construct(AbstractConsumer $consumer, $options = array())
     {
-        $this->consumer = new $consumer($secret, $options);
+        $this->consumer = $consumer;
     }
 
     public function __destruct()

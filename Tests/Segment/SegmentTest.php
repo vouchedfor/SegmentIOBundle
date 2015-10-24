@@ -2,24 +2,19 @@
 
 namespace Vouchedfor\SegmentIOBundle\Segment;
 
-use Vouchedfor\SegmentIOBundle\Consumer\File;
+use Vouchedfor\SegmentIOBundle\Consumer\Socket;
 
 /**
- * Class FileTest
- * @package Vouchedfor\SegmentIOBundle\Consumer
+ * Class SegmentTest
+ * @package Vouchedfor\SegmentIOBundle\Segment
  */
-class FileTest extends \PHPUnit_Framework_TestCase
+class SegmentTest extends \PHPUnit_Framework_TestCase
 {
-    private $consumer;
     private $segment;
 
     public function setup()
     {
-        $this->consumer = $this->getMockBuilder(File::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->segment = new Segment($this->consumer);
+        $this->segment = new Segment(new Socket(''));
     }
 
     /**
@@ -27,15 +22,11 @@ class FileTest extends \PHPUnit_Framework_TestCase
      */
     public function testTrack()
     {
-        $this->consumer->expects($this->any())
-            ->method('track')
-            ->willReturn(true);
-
         $response = $this->segment->track(
             2,
             'Test Event',
             array("property1" => "Value 1",
-                "property2" => "Value 2",
+                  "property2" => "Value 2",
             )
         );
 
@@ -47,10 +38,6 @@ class FileTest extends \PHPUnit_Framework_TestCase
      */
     public function testIdentify()
     {
-        $this->consumer->expects($this->any())
-            ->method('identify')
-            ->willReturn(true);
-
         $response = $this->segment->identify(
             2,
             array(
@@ -69,16 +56,12 @@ class FileTest extends \PHPUnit_Framework_TestCase
      */
     public function testGroup()
     {
-        $this->consumer->expects($this->any())
-            ->method('group')
-            ->willReturn(true);
-
         $response = $this->segment->group(
             3,
             2,
             array(
-                "company" => "Acme Corp",
-                "location" => "San Francisco",
+                    "company" => "Acme Corp",
+                    "location" => "San Francisco",
             )
         );
 
@@ -90,10 +73,6 @@ class FileTest extends \PHPUnit_Framework_TestCase
      */
     public function testPage()
     {
-        $this->consumer->expects($this->any())
-            ->method('page')
-            ->willReturn(true);
-
         $response = $this->segment->page(
             3,
             'Login page',
@@ -111,10 +90,6 @@ class FileTest extends \PHPUnit_Framework_TestCase
      */
     public function testScreen()
     {
-        $this->consumer->expects($this->any())
-            ->method('screen')
-            ->willReturn(true);
-
         $response = $this->segment->screen(
             3,
             'Signup',
@@ -132,10 +107,6 @@ class FileTest extends \PHPUnit_Framework_TestCase
      */
     public function testAlias()
     {
-        $this->consumer->expects($this->any())
-            ->method('alias')
-            ->willReturn(true);
-
         $response = $this->segment->alias(
             3,
             2
