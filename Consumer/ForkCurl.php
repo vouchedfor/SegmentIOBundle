@@ -31,6 +31,7 @@ class ForkCurl extends AbstractQueueConsumer
      */
     public function flushBatch($messages)
     {
+        error_log('flushing', 3, 'fb.log');
         $body = $this->payload($messages);
         $payload = json_encode($body);
 

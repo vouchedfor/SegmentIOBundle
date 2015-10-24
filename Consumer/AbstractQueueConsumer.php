@@ -132,8 +132,7 @@ abstract class AbstractQueueConsumer extends AbstractConsumer
      */
     public function flush()
     {
-
-        $count = count($this->queue);
+        $count = $this->getQueueSize();
         $success = true;
 
         while ($count > 0 && $success) {
@@ -145,6 +144,16 @@ abstract class AbstractQueueConsumer extends AbstractConsumer
         }
 
         return $success;
+    }
+
+    /**
+     * Get the size of the queue
+     *
+     * @return int
+     */
+    public function getQueueSize()
+    {
+        return $count = count($this->queue);
     }
 
     /**

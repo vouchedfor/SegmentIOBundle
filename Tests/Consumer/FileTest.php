@@ -18,9 +18,6 @@ class FileTest extends \PHPUnit_Framework_TestCase
 
     public function tearDown()
     {
-        $str = file_get_contents($this->getFilename());
-        var_dump($str);
-
         unlink($this->getFilename());
     }
 

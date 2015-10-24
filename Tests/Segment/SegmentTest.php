@@ -124,5 +124,90 @@ class SegmentTest extends \PHPUnit_Framework_TestCase
 
         $this->assertNull($response);
     }
+
+    /**
+     * Test batch size
+     */
+    public function testBatchSize() {
+        $socket = new Socket('random_key', array('batch_size' => 2));
+
+        $segment = new Segment($socket);
+
+        $this->assertEquals(0, $socket->getQueueSize());
+
+        $segment->track(
+            'some-user',
+            'File PHP Event - Microtime',
+            array('timestamp' => microtime(true),
+                'property2' => 'Value 2',
+            )
+        );
+
+        $this->assertEquals(1, $socket->getQueueSize());
+
+        $segment->identify(
+            'Calvin',
+            array('loves_php' => false,
+                'type' => 'analytics.log',
+                'birthday' => time()
+            )
+        );
+        $this->assertEquals(2, $socket->getQueueSize());
+
+        $response = $segment->screen(
+            'user-id',
+            'grand theft auto',
+            array(
+                'url' => 'https://a.url/',
+                'referrer' => 'http://google.com',
+            )
+        );
+
+        $this->assertEquals(0, $socket->getQueueSize());
+    }
+
+    /**
+     * Test queue size
+     */
+    public function testQueueSize() {
+        $socket = new Socket('random_key', array('max_queue_size' => 2));
+
+        $segment = new Segment($socket);
+
+        $response = $segment->track(
+            'some-user',
+            'File PHP Event - Microtime',
+            array('timestamp' => microtime(true),
+                'property2' => 'Value 2',
+            )
+        );
+        $this->assertTrue($response);
+
+        $response = $segment->identify(
+            'Calvin',
+            array('loves_php' => false,
+                'type' => 'analytics.log',
+                'birthday' => time()
+            )
+        );
+        $this->assertTrue($response);
+
+        $response = $segment->screen(
+            'user-id',
+            'grand theft auto',
+            array(
+                'url' => 'https://a.url/',
+                'referrer' => 'http://google.com',
+            )
+        );
+        $this->assertTrue($response);
+
+        $response = $segment->alias(
+            3,
+            2
+        );
+        $this->assertFalse($response);
+    }
+
 }
 
