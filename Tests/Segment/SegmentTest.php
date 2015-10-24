@@ -114,5 +114,15 @@ class SegmentTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($response);
     }
+
+    /**
+     * Test flush
+     */
+    public function testFlush()
+    {
+        $response = $this->segment->flush();
+
+        $this->assertNull($response);
+    }
 }
 
