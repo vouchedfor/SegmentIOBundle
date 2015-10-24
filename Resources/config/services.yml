@@ -1,7 +1,13 @@
-parameters:
-    segmentio.socket.class: Vouchedfor\SegmentIOBundle\Consumer\Socket
-
 services:
+    segmentio.socket:
+        class: Vouchedfor\SegmentIOBundle\Consumer\AbstractConsumer
+        factory_class: Vouchedfor\SegmentIOBundle\Consumer\ConsumerFactory
+        factory_method: createConsumer
+        arguments:
+            type: socket
+            access_token: %segmentio.access_token%
+
     segmentio.segment:
         class: Vouchedfor\SegmentIOBundle\Segment\Segment
-        arguments: [% segmentio.socket%, %segmentio.access_token%]
+        arguments:
+            consumer: @segmentio.socket
