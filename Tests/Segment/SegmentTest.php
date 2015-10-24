@@ -14,7 +14,7 @@ class SegmentTest extends \PHPUnit_Framework_TestCase
 
     public function setup()
     {
-        $this->segment = new Segment(new Socket(''));
+        $this->segment = new Segment(new Socket('FuKMkOtGZpiTUFJ2M7nQvwx1pi4kTS3c'));
     }
 
     /**

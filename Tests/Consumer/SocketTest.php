@@ -1,5 +1,4 @@
 <?php
-
 namespace Vouchedfor\SegmentIOBundle\Segment;
 
 use Vouchedfor\SegmentIOBundle\Consumer\Socket;

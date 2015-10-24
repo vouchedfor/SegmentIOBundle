@@ -3,7 +3,6 @@ namespace Vouchedfor\SegmentIOBundle\Segment;
 
 use Vouchedfor\SegmentIOBundle\Client\Client;
 use Vouchedfor\SegmentIOBundle\Consumer\AbstractConsumer;
-use Vouchedfor\SegmentIOBundle\Consumer\Socket;
 
 /**
  * Class Segment
@@ -64,15 +63,15 @@ class Segment
     /**
      * Tags traits about the group.
      *
-     * @param int   $groupId
      * @param int   $userId
+     * @param int   $groupId
      * @param array $traits
      * @return bool Whether the group call succeeded
      */
-    public function group($groupId, $userId, array $traits)
+    public function group($userId, $groupId, array $traits)
     {
-        return $this->getClient()->group(array('groupId' => $groupId,
-                                               'userId' => $userId,
+        return $this->getClient()->group(array('userId' => $userId,
+                                               'groupId' => $groupId,
                                                'traits' => $traits));
     }
 
@@ -109,13 +108,13 @@ class Segment
     /**
      * Aliases the user id from a temporary id to a permanent one
      *
-     * @param int   $userId
      * @param int   $previousId
+     * @param int   $userId
      * @return bool
      */
-    public function alias($userId, $previousId)
+    public function alias($previousId, $userId)
     {
-        return $this->getClient()->alias(array('userId' => $userId, 'previousId' => $previousId));
+        return $this->getClient()->alias(array('previousId' => $previousId, 'userId' => $userId));
     }
 
     /**

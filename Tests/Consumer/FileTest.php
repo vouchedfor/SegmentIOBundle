@@ -1,5 +1,4 @@
 <?php
-
 namespace Vouchedfor\SegmentIOBundle\Segment;
 
 use Vouchedfor\SegmentIOBundle\Consumer\File;
@@ -10,16 +9,19 @@ use Vouchedfor\SegmentIOBundle\Consumer\File;
  */
 class FileTest extends \PHPUnit_Framework_TestCase
 {
-    private $consumer;
     private $segment;
 
     public function setup()
     {
-        $this->consumer = $this->getMockBuilder(File::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->segment = new Segment(new File("",  array("filename" => $this->getFilename())));
+    }
 
-        $this->segment = new Segment($this->consumer);
+    public function tearDown()
+    {
+        $str = file_get_contents($this->getFilename());
+        var_dump($str);
+
+        unlink($this->getFilename());
     }
 
     /**
@@ -27,19 +29,17 @@ class FileTest extends \PHPUnit_Framework_TestCase
      */
     public function testTrack()
     {
-        $this->consumer->expects($this->any())
-            ->method('track')
-            ->willReturn(true);
-
         $response = $this->segment->track(
-            2,
-            'Test Event',
-            array("property1" => "Value 1",
+            "some-user",
+            "File PHP Event - Microtime",
+            array("timestamp" => microtime(true),
                 "property2" => "Value 2",
             )
         );
 
         $this->assertTrue($response);
+
+        $this->checkWritten("track");
     }
 
     /**
@@ -47,21 +47,17 @@ class FileTest extends \PHPUnit_Framework_TestCase
      */
     public function testIdentify()
     {
-        $this->consumer->expects($this->any())
-            ->method('identify')
-            ->willReturn(true);
-
         $response = $this->segment->identify(
-            2,
-            array(
-                "traits" => array(
-                    "name" => "John Lennon",
-                    "email" => "john.lennon@test.com",
-                ),
+            "Calvin",
+             array("loves_php" => false,
+                   "type" => "analytics.log",
+                   "birthday" => time()
             )
         );
 
         $this->assertTrue($response);
+
+        $this->checkWritten("identify");
     }
 
     /**
@@ -69,20 +65,16 @@ class FileTest extends \PHPUnit_Framework_TestCase
      */
     public function testGroup()
     {
-        $this->consumer->expects($this->any())
-            ->method('group')
-            ->willReturn(true);
-
         $response = $this->segment->group(
-            3,
-            2,
-            array(
-                "company" => "Acme Corp",
-                "location" => "San Francisco",
+            "user-id",
+              "group-id",
+              array("type" => "consumer analytics.log test",
             )
         );
 
         $this->assertTrue($response);
+
+        $this->checkWritten("group");
     }
 
     /**
@@ -90,20 +82,18 @@ class FileTest extends \PHPUnit_Framework_TestCase
      */
     public function testPage()
     {
-        $this->consumer->expects($this->any())
-            ->method('page')
-            ->willReturn(true);
-
         $response = $this->segment->page(
-            3,
-            'Login page',
+            "user-id",
+            "analytics-php",
             array(
-                "url" => "http://example.com",
+                "url" => "https://a.url/",
                 "referrer" => "http://google.com",
             )
         );
 
         $this->assertTrue($response);
+
+        $this->checkWritten("page");
     }
 
     /**
@@ -111,20 +101,18 @@ class FileTest extends \PHPUnit_Framework_TestCase
      */
     public function testScreen()
     {
-        $this->consumer->expects($this->any())
-            ->method('screen')
-            ->willReturn(true);
-
         $response = $this->segment->screen(
-            3,
-            'Signup',
+            "user-id",
+            "grand theft auto",
             array(
-                "url" => "http://example.com",
+                "url" => "https://a.url/",
                 "referrer" => "http://google.com",
             )
         );
 
         $this->assertTrue($response);
+
+        $this->checkWritten("screen");
     }
 
     /**
@@ -132,16 +120,33 @@ class FileTest extends \PHPUnit_Framework_TestCase
      */
     public function testAlias()
     {
-        $this->consumer->expects($this->any())
-            ->method('alias')
-            ->willReturn(true);
-
         $response = $this->segment->alias(
-            3,
-            2
+            "previous-id",
+            "user-id"
         );
 
         $this->assertTrue($response);
+
+        $this->checkWritten("alias");
+    }
+
+    /**
+     * @param $type
+     */
+    private function checkWritten($type) {
+        exec("wc -l " . $this->getFilename(), $output);
+        $out = trim($output[0]);
+        $this->assertEquals($out, "1 " . $this->getFilename());
+        $str = file_get_contents($this->getFilename());
+        $json = json_decode(trim($str));
+        $this->assertEquals($type, $json->type);
+    }
+
+    /**
+     * @return string
+     */
+    private function getFilename(){
+        return sys_get_temp_dir().DIRECTORY_SEPARATOR."file_test_analytics.log";
     }
 }
 
