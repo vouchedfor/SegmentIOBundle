@@ -2,6 +2,7 @@
 
 namespace Vouchedfor\SegmentIOBundle\Segment;
 
+use Vouchedfor\SegmentIOBundle\Consumer\File;
 use Vouchedfor\SegmentIOBundle\Consumer\Socket;
 
 /**
@@ -209,5 +210,20 @@ class SegmentTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($response);
     }
 
+    /**
+     * Test debug mode and timeout
+     */
+    public function testDebugMode() {
+        $segment = new Segment(new Socket('random_key', array('debug' => true, 'timeout' => 1)));
+
+        $response = $segment->track(
+            'some-user',
+            'File PHP Event - Microtime',
+            array('timestamp' => microtime(true),
+                'property2' => 'Value 2',
+            )
+        );
+        $this->assertTrue($response);
+    }
 }
 
