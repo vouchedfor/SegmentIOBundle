@@ -158,14 +158,14 @@ class Socket extends AbstractQueueConsumer
     private function createBody($host, $content)
     {
 
-        $req = '';
-        $req .= 'POST /v1/import HTTP/1.1\r\n';
-        $req .= 'Host: '.$host.'\r\n';
-        $req .= 'Content-Type: application/json\r\n';
-        $req .= 'Authorization: Basic '.base64_encode($this->secret.':').'\r\n';
-        $req .= 'Accept: application/json\r\n';
-        $req .= 'Content-length: '.strlen($content).'\r\n';
-        $req .= '\r\n';
+        $req = "";
+        $req .= "POST /v1/import HTTP/1.1\r\n";
+        $req .= "Host: ".$host."\r\n";
+        $req .= "Content-Type: application/json\r\n";
+        $req .= "Authorization: Basic ".base64_encode($this->secret.":")."\r\n";
+        $req .= "Accept: application/json\r\n";
+        $req .= "Content-length: ".strlen($content)."\r\n";
+        $req .= "\r\n";
         $req .= $content;
 
         return $req;
