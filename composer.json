@@ -1,7 +1,8 @@
 {
-    "name": "vouchedfor/SegmentIOBundle",
+    "name": "vouchedfor/segment-io-bundle",
     "description": "Segment.io integration for Symfony 2",
     "type": "symfony-bundle",
+    "homepage": "https://github.com/vouchedfor/SegmentIOBundle"
     "license": "MIT",
     "authors": [
         {
