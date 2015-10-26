@@ -6,8 +6,19 @@ Installation
 Step 1: Download the Bundle
 ---------------------------
 
-Open a command console, enter your project directory and execute the
-following command to download the latest stable version of this bundle:
+Open a command console, enter your project directory, add the following
+to composer.json:
+
+```bash
+  "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/vouchedfor/SegmentIOBundle.git"
+    }
+  ],
+```
+
+and execute the following command to download the latest stable version of this bundle:
 
 ```bash
 $ composer require vouchedfor/segment-io-bundle
