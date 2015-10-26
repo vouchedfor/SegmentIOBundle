@@ -31,20 +31,18 @@ class ForkCurl extends AbstractQueueConsumer
      */
     public function flushBatch($messages)
     {
-        error_log('flushing', 3, 'fb.log');
         $body = $this->payload($messages);
         $payload = json_encode($body);
 
         # Escape for shell usage.
         $payload = escapeshellarg($payload);
-        $secret = $this->secret;
 
         $protocol = $this->ssl() ? 'https://' : 'http://';
         $host = 'api.segment.io';
         $path = '/v1/import';
         $url = $protocol.$host.$path;
 
-        $cmd = 'curl -u $secret: -X POST -H "Content-Type: application/json"';
+        $cmd = 'curl -u '.$this->secret.': -X POST -H "Content-Type: application/json"';
         $cmd .= ' -d '.$payload.' "'.$url.'"';
 
         if (!$this->debug()) {
