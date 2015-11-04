@@ -19,6 +19,34 @@ class SegmentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test identify
+     */
+    public function testIdentify()
+    {
+        $userId = 90000;
+
+        $response = $this->segment->identify(
+            $userId,
+            array(
+                "traits" =>
+                    array(
+                        "name" => "Paul McCartney",
+                        "email" => "paul@test.com",
+                        "profession" => "solicitor",
+                    ),
+                "integrations" =>
+                    array(
+                        "Intercom" => array(
+                            "user_hash" => 'something'
+                        )
+                    )
+            ));
+
+        $this->assertTrue($response);
+    }
+
+
+    /**
      * Test track
      */
     public function testTrack()
@@ -27,25 +55,7 @@ class SegmentTest extends \PHPUnit_Framework_TestCase
             2,
             'Test Event',
             array('property1' => 'Value 1',
-                  'property2' => 'Value 2',
-            )
-        );
-
-        $this->assertTrue($response);
-    }
-
-    /**
-     * Test identify
-     */
-    public function testIdentify()
-    {
-        $response = $this->segment->identify(
-            2,
-            array(
-                'traits' => array(
-                    'name' => 'John Lennon',
-                    'email' => 'john.lennon@test.com',
-                ),
+                'property2' => 'Value 2',
             )
         );
 
@@ -148,9 +158,12 @@ class SegmentTest extends \PHPUnit_Framework_TestCase
 
         $segment->identify(
             'Calvin',
-            array('loves_php' => false,
-                'type' => 'analytics.log',
-                'birthday' => time()
+            array('traits' =>
+                array(
+                    'loves_php' => false,
+                    'type' => 'analytics.log',
+                    'birthday' => time()
+                ),
             )
         );
         $this->assertEquals(2, $socket->getQueueSize());
@@ -186,9 +199,12 @@ class SegmentTest extends \PHPUnit_Framework_TestCase
 
         $response = $segment->identify(
             'Calvin',
-            array('loves_php' => false,
-                'type' => 'analytics.log',
-                'birthday' => time()
+            array('traits' =>
+                array(
+                    'loves_php' => false,
+                    'type' => 'analytics.log',
+                    'birthday' => time()
+                )
             )
         );
         $this->assertTrue($response);

@@ -47,17 +47,14 @@ class Segment
      * Tags traits about the user.
      *
      * @param  int   $userId
-     * @param  array $traits
+     * @param  array $message
      * @return bool Whether the identify call succeeded
      */
-    public function identify($userId, array $traits)
+    public function identify($userId, array $message)
     {
-        return $this->getClient()->identify(
-            array(
-                'userId' => $userId,
-                'traits' => $traits,
-            )
-        );
+        $message['userId'] = $userId;
+
+        return $this->getClient()->identify($message);
     }
 
     /**
