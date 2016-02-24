@@ -1,14 +1,16 @@
 services:
     segmentio.consumer.socket:
         class: Vouchedfor\SegmentIOBundle\Consumer\AbstractConsumer
-        factory: [Vouchedfor\SegmentIOBundle\Consumer\ConsumerFactory, createConsumer]
+        factory_class: Vouchedfor\SegmentIOBundle\Consumer\ConsumerFactory
+        factory_method: createConsumer
         arguments:
             type: socket
             access_token: %segmentio.access_token%
 
     segmentio.consumer.batch:
         class: Vouchedfor\SegmentIOBundle\Consumer\AbstractConsumer
-        factory: [Vouchedfor\SegmentIOBundle\Consumer\ConsumerFactory, createConsumer]
+        factory_class: Vouchedfor\SegmentIOBundle\Consumer\ConsumerFactory
+        factory_method: createConsumer
         arguments:
             type: batch
             access_token: %segmentio.access_token%
