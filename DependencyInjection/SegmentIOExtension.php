@@ -26,3 +26,4 @@ class SegmentIOExtension extends Extension
         $loader->load('services.yml');
     }
 }
+
